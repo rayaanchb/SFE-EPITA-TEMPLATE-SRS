@@ -1,0 +1,62 @@
+\documentclass[11pt,a4paper,oneside]{article}
+\usepackage{epita-sfe} % Our custom package with layout and macros
+
+%======================================================================
+% METADATA Configuration
+%======================================================================
+
+% Student details
+\studentname{Prénom NOM}
+\linkedin{https://linkedin.com/in/votrenom}
+\promotion{2026}
+\majeure{SSSE}
+
+% Internship & Company details
+\company{Entreprise d'accueil}
+\internshipsubject{Sujet complet de votre stage de fin d'études}
+
+% Logo configuration (if you don't have them, comment out or leave empty to see a placeholder box)
+% Example: \epitalogo{media/logo_epita.png}
+\epitalogo{media/epita_logo.png}
+\companylogo{media/company_logo.png}
+
+% Note: If you want to hide all instructions (magenta italic text) for final export, 
+% change `\usepackage{epita-sfe}` above to `\usepackage[hideinstructions]{epita-sfe}`.
+
+\begin{document}
+
+% Initialize Custom Title Page
+\makeepitatitle
+
+% Table of Contents
+\tableofcontents
+\newpage
+
+%======================================================================
+% CHAPTERS INCLUSION
+%======================================================================
+
+% 1. Executive Summary (En anglais)
+\input{chapters/01_exec_sum}
+\newpage
+
+% 2. Remerciements
+\input{chapters/02_remerciements}
+\newpage
+
+% 3. Éléments contextuels
+\input{chapters/03_contexte}
+\newpage
+
+% 4. Récit du stage
+\input{chapters/04_recit_stage}
+\newpage
+
+% 5. Auto-évaluation et analyse réflexive
+\input{chapters/05_auto_evaluation}
+\newpage
+
+% 6. Annexes
+\input{chapters/06_annexes}
+
+\end{document}

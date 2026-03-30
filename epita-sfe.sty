@@ -1,0 +1,177 @@
+\ProvidesPackage{epita-sfe}[2026/03/30 EPITA End of Studies Report Package]
+
+% --- Package Options ---
+\newif\if@hideinstructions\@hideinstructionsfalse
+\DeclareOption{hideinstructions}{\@hideinstructionstrue}
+\ProcessOptions\relax
+
+% --- Core Packages ---
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[T1]{fontenc}
+\RequirePackage[french]{babel} % For french document structure
+\RequirePackage[a4paper, top=3cm, bottom=3cm, left=2.5cm, right=2.5cm, headheight=2cm, footskip=1.5cm]{geometry}
+\RequirePackage{xcolor}
+\RequirePackage{graphicx}
+\RequirePackage{tcolorbox}
+\RequirePackage{array}
+\RequirePackage{booktabs}
+\RequirePackage{tabularx}
+\RequirePackage{lmodern} % Better font
+\RequirePackage{hyperref}
+\RequirePackage{etoolbox}
+
+% --- Custom Colors ---
+\definecolor{epitablue}{RGB}{0, 75, 135}
+\definecolor{instructionmagenta}{RGB}{255, 0, 255}
+\definecolor{guidelinebg}{RGB}{245, 245, 250}
+
+% --- Hyperref Setup ---
+\hypersetup{
+    colorlinks=true,
+    linkcolor=epitablue,
+    filecolor=epitablue,      
+    urlcolor=epitablue,
+    citecolor=epitablue,
+    pdftitle={Rapport de fin d'études - EPITA},
+}
+
+% --- Custom Variables Definitions ---
+\def\@studentname{}
+\newcommand{\studentname}[1]{\def\@studentname{#1}}
+
+\def\@promotion{}
+\newcommand{\promotion}[1]{\def\@promotion{#1}}
+
+\def\@majeure{}
+\newcommand{\majeure}[1]{\def\@majeure{#1}}
+
+\def\@company{}
+\newcommand{\company}[1]{\def\@company{#1}}
+
+\def\@internshipsubject{}
+\newcommand{\internshipsubject}[1]{\def\@internshipsubject{#1}}
+
+\def\@linkedin{}
+\newcommand{\linkedin}[1]{\def\@linkedin{#1}}
+
+\def\@epitalogo{}
+\newcommand{\epitalogo}[1]{\def\@epitalogo{#1}}
+
+\def\@companylogo{}
+\newcommand{\companylogo}[1]{\def\@companylogo{#1}}
+
+% --- Custom Environments & Macros ---
+
+% 1. Instruction macro (magenta italic text)
+\newcommand{\instruction}[1]{%
+  \if@hideinstructions
+    % do nothing if hideinstructions is set
+  \else
+    \textcolor{instructionmagenta}{\textit{#1}}%
+  \fi
+}
+
+% 2. Guideline Environment (the table with a lightbulb in the docx)
+\newtcolorbox{guideline}{
+  colback=guidelinebg,
+  colframe=epitablue!50!white,
+  arc=3pt,
+  boxrule=1pt,
+  left=5mm,
+  title=\textbf{Conseil / Ligne directrice},
+  coltitle=black,
+  colbacktitle=guidelinebg,
+  fonttitle=\small\sffamily,
+  bottomtitle=0mm,
+  toptitle=1mm,
+  attach title to upper={\par\vspace{1mm}},
+  fontupper=\small\itshape
+}
+
+% --- Title Page Definition ---
+\newcommand{\makeepitatitle}{
+    \begin{titlepage}
+        \pagestyle{empty}
+        \begin{center}
+            \vspace*{1cm}
+            
+            % Top logos
+            \ifdefempty{\@epitalogo}{
+                \rule{4cm}{2cm} % Placeholder if no logo provided
+            }{
+                \includegraphics[height=2cm]{\@epitalogo}
+            }
+            
+            \vspace{2cm}
+            
+            % Promotion and Majeure table formatting
+            \begin{tabularx}{\textwidth}{@{}X r@{}}
+                \textbf{\Large PROMOTION \@promotion} & \textbf{\Large MAJEURE \@majeure} \\
+                \midrule
+            \end{tabularx}
+            
+            \vspace{3cm}
+            
+            % Main Title
+            {\Huge\textbf{RAPPORT DE FIN D'ETUDES}\par}
+            \vspace{0.5cm}
+            {\Large\textbf{\@internshipsubject}\par}
+            
+            \vspace{1.5cm}
+            
+            % Company Logo in the center
+            \ifdefempty{\@companylogo}{}{
+                \includegraphics[width=6cm,keepaspectratio]{\@companylogo}
+            }
+            
+            \vspace{1.5cm}
+            
+            \vfill
+            
+            % Footer of the title page
+            \begin{tabularx}{\textwidth}{@{}X r@{}}
+                \textbf{\Large \@studentname} & \textbf{Année} \@promotion \\
+                \url{\@linkedin} & \textbf{Entreprise d'accueil :} \@company \\
+            \end{tabularx}
+        \end{center}
+    \end{titlepage}
+    \clearpage
+}
+
+% --- Better Section Rendering ---
+\RequirePackage{titlesec}
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{epitablue}}
+  {\thesection.}{1em}{}
+
+% --- Header & Footer Configuration ---
+\RequirePackage{fancyhdr}
+% headheight and footskip are now managed by geometry package up top
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{%
+    \ifdefempty{\@epitalogo}{}{%
+        \includegraphics[height=1.5cm]{\@epitalogo}%
+    }%
+}
+\fancyhead[C]{\parbox[b][1.5cm][c]{12cm}{\centering Rapport de fin d'études - \@majeure{} - Promotion \@promotion}}
+\fancyfoot[L]{\@studentname{} - \@company}
+\fancyfoot[R]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\fancypagestyle{plain}{
+    \fancyhf{}
+    \fancyhead[L]{%
+        \ifdefempty{\@epitalogo}{}{%
+            \includegraphics[height=1.5cm]{\@epitalogo}%
+        }%
+    }
+    \fancyhead[C]{\parbox[b][1.5cm][c]{12cm}{\centering Rapport de fin d'études - \@majeure{} - Promotion \@promotion}}
+    \fancyfoot[L]{\@studentname{} - \@company}
+    \fancyfoot[R]{\thepage}
+    \renewcommand{\headrulewidth}{0.4pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+}
+
+\endinput
