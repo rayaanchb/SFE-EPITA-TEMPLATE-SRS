@@ -1,62 +1,77 @@
 \documentclass[11pt,a4paper,oneside]{article}
-\usepackage{epita-sfe} % Our custom package with layout and macros
+\usepackage{epita-sfe}
+\usepackage[backend=biber, style=ieee]{biblatex}
+\addbibresource{references.bib}
 
 %======================================================================
 % METADATA Configuration
 %======================================================================
 
-% Student details
 \studentname{Prénom NOM}
 \linkedin{https://linkedin.com/in/votrenom}
 \promotion{2026}
-\majeure{SSSE}
+\majeure{SRS}
 
-% Internship & Company details
 \company{Entreprise d'accueil}
 \internshipsubject{Sujet complet de votre stage de fin d'études}
 
-% Logo configuration (if you don't have them, comment out or leave empty to see a placeholder box)
-% Example: \epitalogo{media/logo_epita.png}
 \epitalogo{media/epita_logo.png}
 \companylogo{media/company_logo.png}
 
-% Note: If you want to hide all instructions (magenta italic text) for final export, 
-% change `\usepackage{epita-sfe}` above to `\usepackage[hideinstructions]{epita-sfe}`.
-
 \begin{document}
 
-% Initialize Custom Title Page
+% Page de garde
 \makeepitatitle
 
-% Table of Contents
+% Table des matières
 \tableofcontents
 \newpage
 
 %======================================================================
-% CHAPTERS INCLUSION
+% CHAPTERS
 %======================================================================
 
-% 1. Executive Summary (En anglais)
-\input{chapters/01_exec_sum}
-\newpage
-
-% 2. Remerciements
+% 1. Remerciements
 \input{chapters/02_remerciements}
 \newpage
 
-% 3. Éléments contextuels
+% 2. Executive Summary (FR + EN)
+\input{chapters/01_exec_sum}
+\newpage
+
+% 3. Introduction
+\input{chapters/00_introduction}
+\newpage
+
+% 4. Présentation de l'entreprise & contexte
 \input{chapters/03_contexte}
 \newpage
 
-% 4. Récit du stage
+% 5. Récit du stage + Planning (Gantt)
 \input{chapters/04_recit_stage}
 \newpage
 
-% 5. Auto-évaluation et analyse réflexive
+% 6. Apprentissages scientifiques et techniques
+\input{chapters/07_apprentissages}
+\newpage
+
+% 7. Valeur ajoutée
+\input{chapters/08_valeur_ajoutee}
+\newpage
+
+% 8. Auto-évaluation et analyse réflexive
 \input{chapters/05_auto_evaluation}
 \newpage
 
-% 6. Annexes
+% 9. Conclusion
+\input{chapters/09_conclusion}
+\newpage
+
+% 10. Bibliographie
+\printbibliography[heading=bibintoc, title={Bibliographie / Webographie}]
+\newpage
+
+% 11. Annexes
 \input{chapters/06_annexes}
 
 \end{document}
