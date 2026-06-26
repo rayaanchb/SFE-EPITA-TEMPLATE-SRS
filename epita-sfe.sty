@@ -2,7 +2,9 @@
 
 % --- Package Options ---
 \newif\if@hideinstructions\@hideinstructionsfalse
+\newif\if@hideguidelines\@hideguidelinesfalse
 \DeclareOption{hideinstructions}{\@hideinstructionstrue}
+\DeclareOption{hideguidelines}{\@hideguidelinestrue}
 \ProcessOptions\relax
 
 % --- Core Packages ---
@@ -19,6 +21,7 @@
 \RequirePackage{lmodern} % Better font
 \RequirePackage{hyperref}
 \RequirePackage{etoolbox}
+\RequirePackage{verbatim} % guideline
 
 % --- Custom Colors ---
 \definecolor{epitablue}{RGB}{0, 75, 135}
@@ -71,22 +74,26 @@
   \fi
 }
 
-% 2. Guideline Environment (the table with a lightbulb in the docx)
-\newtcolorbox{guideline}{
-  colback=guidelinebg,
-  colframe=epitablue!50!white,
-  arc=3pt,
-  boxrule=1pt,
-  left=5mm,
-  title=\textbf{Conseil / Ligne directrice},
-  coltitle=black,
-  colbacktitle=guidelinebg,
-  fonttitle=\small\sffamily,
-  bottomtitle=0mm,
-  toptitle=1mm,
-  attach title to upper={\par\vspace{1mm}},
-  fontupper=\small\itshape
-}
+% 2. Guideline Environment
+\if@hideguidelines
+  \newenvironment{guideline}{\comment}{\endcomment}
+\else
+  \newtcolorbox{guideline}{
+    colback=guidelinebg,
+    colframe=epitablue!50!white,
+    arc=3pt,
+    boxrule=1pt,
+    left=5mm,
+    title=\textbf{Conseil / Ligne directrice},
+    coltitle=black,
+    colbacktitle=guidelinebg,
+    fonttitle=\small\sffamily,
+    bottomtitle=0mm,
+    toptitle=1mm,
+    attach title to upper={\par\vspace{1mm}},
+    fontupper=\small\itshape
+  }
+\fi
 
 % --- Title Page Definition ---
 \newcommand{\makeepitatitle}{
