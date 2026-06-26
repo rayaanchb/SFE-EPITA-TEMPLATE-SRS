@@ -72,17 +72,30 @@ Dès le début du fichier `main.tex`, vous devez configurer les variables person
 
 ### A. Masquer toutes les consignes pour la version finale
 
-Pendant la rédaction, le template affiche les consignes scolaires en magenta ou dans divers encadrés.
-Pour la compilation de **votre version PDF finale** à rendre au jury, vous pouvez faire disparaître absolument toutes ces consignes temporaires en un clin d'œil en activant le mode "hideinstructions".
+Pendant la rédaction, le template affiche les consignes scolaires en magenta
+ou dans divers encadrés. Pour la compilation de **votre version PDF finale**
+à rendre au jury, vous pouvez faire disparaître absolument toutes ces
+consignes temporaires en un clin d'œil en activant les options
+`hideinstructions` et `hideguidelines`.
 
 Modifiez l'import du package à la ligne 2 de `main.tex` :
 
 ```latex
-% Mode rédaction (les consignes de l'école s'affichent)
+% Mode rédaction (les consignes et encadrés s'affichent)
 \usepackage{epita-sfe}
 
-% Mode rendu final (toutes les instructions disparaissent du PDF !)
+% Mode rendu final (toutes les instructions et guidelines disparaissent du PDF !)
+\usepackage[hideinstructions, hideguidelines]{epita-sfe}
+```
+
+Vous pouvez également utiliser les options séparément :
+
+```latex
+% Masquer uniquement les instructions en magenta
 \usepackage[hideinstructions]{epita-sfe}
+
+% Masquer uniquement les encadrés de guidelines
+\usepackage[hideguidelines]{epita-sfe}
 ```
 
 ### B. Commande d'instruction (`\instruction`)
